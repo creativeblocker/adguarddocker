@@ -9,12 +9,15 @@ RUN mkdir -p /etc/adguardhome
 # Copy AdGuard Home configuration
 COPY adguardhome.conf /etc/adguardhome/
 
-# Download AdGuard Home binary (replace with correct version and architecture)
+# Download AdGuard Home binary with retry logic
 ARG ADGUARDHOME_VERSION=v0.108.2
-ARG ADGUARDHOME_ARCH='x86'  # Enclose the value in single quotes
+ARG ADGUARDHOME_ARCH='x86'
 
-RUN wget https://github.com/AdGuardTeam/AdGuardHome/releases/download/$ADGUARDHOME_VERSION/AdGuardHome_linux_$ADGUARDHOME_ARCH -O /usr/local/bin/adguardhome \
-    && chmod +x /usr/local/bin/adguardhome
+RUN for i in {1..3}; do \
+    wget -qO- https://github.com/AdGuardTeam/AdGuardHome/releases/download/$ADGUARDHOME_VERSION/AdGuardHome_linux_$ADGUARDHOME_ARCH \
+        && break || echo "Download failed. Retrying..." && sleep 5; \
+  done \
+  > /usr/local/bin/adguardhome && chmod +x /usr/local/bin/adguardhome
 
 # Expose port 53 for DNS
 EXPOSE 53
