@@ -3,8 +3,11 @@ FROM alpine:latest
 # Install required packages
 RUN apk add --no-cache ca-certificates
 
-# Copy AdGuard Home configuration (replace with your config)
-COPY adguardhome.conf /etc/adguardhome/AdGuardHome.conf
+# Create configuration directory
+RUN mkdir -p /etc/adguardhome
+
+# Copy AdGuard Home configuration
+COPY adguardhome.conf /etc/adguardhome/
 
 # Download AdGuard Home binary (replace with correct version)
 RUN wget https://github.com/AdGuardTeam/AdGuardHome/releases/download/v0.108.2/AdGuardHome_linux_arm64 -O /usr/local/bin/adguardhome
