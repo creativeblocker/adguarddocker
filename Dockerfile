@@ -11,7 +11,7 @@ COPY adguardhome.conf /etc/adguardhome/
 
 # Download AdGuard Home binary with retry logic
 ARG ADGUARDHOME_VERSION=v0.108.2
-ARG ADGUARDHOME_ARCH='x86'
+ARG ADGUARDHOME_ARCH='i386'  # Assuming x86 architecture
 
 RUN for i in {1..3}; do \
     wget -qO- https://github.com/AdGuardTeam/AdGuardHome/releases/download/$ADGUARDHOME_VERSION/AdGuardHome_linux_$ADGUARDHOME_ARCH \
