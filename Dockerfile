@@ -11,7 +11,7 @@ COPY adguardhome.conf /etc/adguardhome/
 
 # Download AdGuard Home binary (replace with correct version and architecture)
 ARG ADGUARDHOME_VERSION=v0.108.2
-ARG ADGUARDHOME_ARCH=amd64  # Replace with your system's architecture
+ARG ADGUARDHOME_ARCH='x86'  # Enclose the value in single quotes
 
 RUN wget https://github.com/AdGuardTeam/AdGuardHome/releases/download/$ADGUARDHOME_VERSION/AdGuardHome_linux_$ADGUARDHOME_ARCH -O /usr/local/bin/adguardhome \
     && chmod +x /usr/local/bin/adguardhome
